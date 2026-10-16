@@ -247,15 +247,23 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+
 def init_db():
     with app.app_context():
         db.create_all()
         if not User.query.filter_by(username='admin').first():
-            db.session.add(User(username='admin', password=generate_password_hash('admin123', method='pbkdf2:sha256'), role='admin'))
+            db.session.add(
+                User(
+                    username='admin',
+                    password=generate_password_hash(
+                        'admin123',
+                        method='pbkdf2:sha256'
+                    ),
+                    role='admin'
+                )
+            )
             db.session.commit()
 
-
-db.session.commit()
 
 if __name__ == '__main__':
     init_db()
