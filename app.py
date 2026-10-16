@@ -254,7 +254,13 @@ def init_db():
             db.session.add(User(username='admin', password=generate_password_hash('admin123', method='pbkdf2:sha256'), role='admin'))
             db.session.commit()
 
+
+db.session.commit()
+
 if __name__ == '__main__':
     init_db()
-    #app.run(debug=True)
-app.run(debug=False)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )
